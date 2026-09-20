@@ -6,13 +6,14 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-
-        <Link to="/sip-calculator" className="navbar-logo">
+        <Link
+          to="/sip-calculator"
+          className="navbar-logo"
+        >
           Tech<span>Finance</span>
         </Link>
 
         <div className="navbar-links">
-
           <Link
             to="/sip-calculator"
             className={`nav-link ${
@@ -57,6 +58,16 @@ function Navbar() {
             FD Calculator
           </Link>
 
+          <Link
+            to="/compare-investments"
+            className={`nav-link ${
+              location.pathname === "/compare-investments"
+                ? "active"
+                : ""
+            }`}
+          >
+            Compare
+          </Link>
         </div>
       </div>
     </nav>

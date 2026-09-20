@@ -580,3 +580,364 @@ input {
     font-size: 13px;
   }
 }
+
+/* ================================
+   INVESTMENT COMPARISON
+================================ */
+
+.investment-comparison {
+  width: 100%;
+}
+
+/* Input Card */
+
+.comparison-inputs {
+  padding: 34px;
+  margin-bottom: 24px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 24px;
+  box-shadow:
+    0 4px 6px rgba(17, 24, 39, 0.02),
+    0 18px 45px rgba(17, 24, 39, 0.06);
+}
+
+.comparison-mode {
+  display: flex;
+  gap: 8px;
+  padding: 5px;
+  margin-bottom: 32px;
+  background: #f3f4f6;
+  border-radius: 12px;
+}
+
+.comparison-mode button {
+  flex: 1;
+  padding: 11px 16px;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.comparison-mode button:hover {
+  color: #111827;
+}
+
+.comparison-mode button.active {
+  background: #ffffff;
+  color: #4f46e5;
+  box-shadow: 0 2px 7px rgba(17, 24, 39, 0.08);
+}
+
+.comparison-input {
+  margin-bottom: 30px;
+}
+
+.comparison-input:last-child {
+  margin-bottom: 0;
+}
+
+.comparison-input-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.comparison-input-header label {
+  color: #374151;
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.comparison-input-header strong {
+  min-width: 100px;
+  padding: 8px 12px;
+  text-align: center;
+  background: #f3f4f6;
+  border-radius: 9px;
+  color: #111827;
+  font-size: 15px;
+}
+
+.comparison-input input[type="range"] {
+  width: 100%;
+  height: 6px;
+  margin: 0;
+  appearance: none;
+  background: #e5e7eb;
+  border-radius: 999px;
+  outline: none;
+  cursor: pointer;
+}
+
+.comparison-input input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 21px;
+  height: 21px;
+  background: #ffffff;
+  border: 5px solid #4f46e5;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
+}
+
+.comparison-input input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: #ffffff;
+  border: 4px solid #4f46e5;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+
+/* ================================
+   COMPARISON TABLE
+================================ */
+
+.comparison-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 24px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 24px;
+  box-shadow:
+    0 4px 6px rgba(17, 24, 39, 0.02),
+    0 18px 45px rgba(17, 24, 39, 0.06);
+}
+
+.comparison-table {
+  min-width: 850px;
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns:
+    1.5fr
+    1fr
+    1fr
+    1.2fr
+    1.2fr;
+  align-items: center;
+  gap: 20px;
+}
+
+.comparison-table-header {
+  padding: 20px 24px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.comparison-table-row {
+  padding: 22px 24px;
+  border-bottom: 1px solid #f0f1f3;
+}
+
+.comparison-table-row:last-child {
+  border-bottom: none;
+}
+
+.comparison-table-row > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.comparison-table-row strong {
+  color: #111827;
+  font-size: 14px;
+}
+
+.comparison-table-row small {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.return-input {
+  display: flex;
+  align-items: center;
+  width: 90px;
+}
+
+.return-input input {
+  width: 68px;
+  padding: 8px 7px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  outline: none;
+  color: #111827;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.return-input input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.return-input span {
+  margin-left: 5px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.comparison-table-row > span {
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.comparison-table-row > strong {
+  font-size: 14px;
+}
+
+.comparison-table-row .gain {
+  color: #4f46e5;
+}
+
+
+/* ================================
+   COMPARISON CHART
+================================ */
+
+.comparison-chart {
+  padding: 34px;
+  margin-bottom: 24px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 24px;
+  box-shadow:
+    0 4px 6px rgba(17, 24, 39, 0.02),
+    0 18px 45px rgba(17, 24, 39, 0.06);
+}
+
+.comparison-section-heading {
+  margin-bottom: 30px;
+}
+
+.comparison-section-heading .eyebrow {
+  margin-bottom: 10px;
+}
+
+.comparison-section-heading h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 28px;
+  letter-spacing: -0.03em;
+}
+
+.comparison-section-heading p:last-child {
+  margin: 9px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.chart-row {
+  margin-bottom: 22px;
+}
+
+.chart-row:last-child {
+  margin-bottom: 0;
+}
+
+.chart-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 9px;
+}
+
+.chart-label span {
+  color: #374151;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.chart-label strong {
+  color: #111827;
+  font-size: 14px;
+}
+
+.chart-track {
+  width: 100%;
+  height: 12px;
+  overflow: hidden;
+  background: #eef0f3;
+  border-radius: 999px;
+}
+
+.chart-bar {
+  height: 100%;
+  min-width: 4px;
+  background: #4f46e5;
+  border-radius: 999px;
+  transition: width 0.35s ease;
+}
+
+
+/* ================================
+   COMPARISON NOTE
+================================ */
+
+.comparison-note {
+  padding: 20px 24px;
+  margin-bottom: 30px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+}
+
+.comparison-note strong {
+  color: #374151;
+  font-size: 13px;
+}
+
+.comparison-note p {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 800px) {
+  .comparison-inputs,
+  .comparison-chart {
+    padding: 24px;
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .comparison-mode {
+    flex-direction: column;
+  }
+
+  .comparison-inputs,
+  .comparison-chart {
+    padding: 20px;
+  }
+
+  .comparison-section-heading h2 {
+    font-size: 24px;
+  }
+
+  .comparison-note {
+    padding: 18px;
+  }
+}
