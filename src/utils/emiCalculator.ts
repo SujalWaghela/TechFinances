@@ -1,0 +1,35 @@
+export interface EmiResult {
+  monthlyEMI: number;
+  totalInterest: number;
+  totalPayment: number;
+}
+
+export function calculateEMI(
+  loanAmount: number,
+  annualInterestRate: number,
+  years: number
+): EmiResult {
+  const months = years * 12;
+  const monthlyRate = annualInterestRate / 12 / 100;
+
+  let monthlyEMI: number;
+
+  if (monthlyRate === 0) {
+    monthlyEMI = loanAmount / months;
+  } else {
+    monthlyEMI =
+      (loanAmount *
+        monthlyRate *
+        Math.pow(1 + monthlyRate, months)) /
+      (Math.pow(1 + monthlyRate, months) - 1);
+  }
+
+  const totalPayment = monthlyEMI * months;
+  const totalInterest = totalPayment - loanAmount;
+
+  return {
+    monthlyEMI,
+    totalInterest,
+    totalPayment,
+  };
+}
