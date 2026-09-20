@@ -9,10 +9,14 @@ import {
   calculateInvestmentResult,
   calculatePortfolioSummary,
   type PortfolioInvestment,
+  type PortfolioSnapshot,
 } from "../../utils/portfolioCalculator";
 
 const STORAGE_KEY =
   "techfinance-portfolio";
+
+export const SNAPSHOT_STORAGE_KEY =
+  "techfinance-portfolio-snapshots";
 
 function PortfolioTracker() {
   const [investments, setInvestments] =
@@ -33,12 +37,37 @@ function PortfolioTracker() {
       }
     });
 
+  const [snapshots, setSnapshots] =
+    useState<PortfolioSnapshot[]>(() => {
+      try {
+        const saved =
+          localStorage.getItem(
+            SNAPSHOT_STORAGE_KEY
+          );
+
+        if (!saved) {
+          return [];
+        }
+
+        return JSON.parse(saved);
+      } catch {
+        return [];
+      }
+    });
+
   useEffect(() => {
     localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify(investments)
     );
   }, [investments]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      SNAPSHOT_STORAGE_KEY,
+      JSON.stringify(snapshots)
+    );
+  }, [snapshots]);
 
   const results = useMemo(
     () =>
@@ -88,6 +117,57 @@ function PortfolioTracker() {
     setInvestments([]);
   }
 
+  function handleSaveSnapshot() {
+    if (investments.length === 0) {
+      return;
+    }
+
+    const today =
+      new Date().toISOString().split("T")[0];
+
+    const existingSnapshot =
+      snapshots.find(
+        (snapshot) =>
+          snapshot.date === today
+      );
+
+    if (existingSnapshot) {
+      setSnapshots((current) =>
+        current.map((snapshot) =>
+          snapshot.date === today
+            ? {
+                ...snapshot,
+                totalInvested:
+                  summary.totalInvested,
+                currentValue:
+                  summary.currentValue,
+                totalGain:
+                  summary.totalGain,
+              }
+            : snapshot
+        )
+      );
+
+      return;
+    }
+
+    const newSnapshot: PortfolioSnapshot = {
+      id: crypto.randomUUID(),
+      date: today,
+      totalInvested:
+        summary.totalInvested,
+      currentValue:
+        summary.currentValue,
+      totalGain:
+        summary.totalGain,
+    };
+
+    setSnapshots((current) => [
+      ...current,
+      newSnapshot,
+    ]);
+  }
+
   return (
     <div className="investment-comparison portfolio-tracker">
       <PortfolioInput
@@ -99,6 +179,27 @@ function PortfolioTracker() {
       <PortfolioSummary
         summary={summary}
       />
+
+      <div className="portfolio-snapshot-card">
+        <div>
+          <strong>
+            Save Portfolio Snapshot
+          </strong>
+
+          <p>
+            Save today's portfolio value so
+            you can monitor growth and trends
+            over time.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onClick={handleSaveSnapshot}
+        >
+          Save Today's Snapshot
+        </button>
+      </div>
 
       <div className="portfolio-holdings-header">
         <div>
@@ -143,10 +244,9 @@ function PortfolioTracker() {
 
         <p>
           Portfolio values are based on the
-          prices entered by you. This tracker
-          does not automatically fetch live
-          market prices. Actual market values
-          may change continuously.
+          prices entered by you. Saved snapshots
+          are used to generate historical
+          analytics.
         </p>
       </div>
     </div>

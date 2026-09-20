@@ -1374,3 +1374,510 @@ input {
     font-size: 24px;
   }
 }
+
+/* ================================
+   ANALYTICS
+================================ */
+
+.analytics-dashboard {
+  width: 100%;
+}
+
+.analytics-summary {
+  display: grid;
+  grid-template-columns:
+    repeat(5, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.analytics-card {
+  padding: 22px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  box-shadow:
+    0 4px 6px rgba(17, 24, 39, 0.02),
+    0 12px 30px rgba(17, 24, 39, 0.04);
+}
+
+.analytics-card span {
+  display: block;
+  margin-bottom: 10px;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.analytics-card strong {
+  color: #111827;
+  font-size: 20px;
+}
+
+.analytics-profit strong,
+.analytics-profit-text {
+  color: #059669 !important;
+}
+
+.analytics-loss strong,
+.analytics-loss-text {
+  color: #dc2626 !important;
+}
+
+/* ================================
+   ANALYTICS SECTION
+================================ */
+
+.analytics-chart-card,
+.analytics-report-card,
+.analytics-insights {
+  padding: 34px;
+  margin-bottom: 24px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 24px;
+  box-shadow:
+    0 4px 6px rgba(17, 24, 39, 0.02),
+    0 18px 45px rgba(17, 24, 39, 0.06);
+}
+
+.analytics-section-heading {
+  margin-bottom: 28px;
+}
+
+.analytics-section-heading .eyebrow {
+  margin-bottom: 10px;
+}
+
+.analytics-section-heading h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 28px;
+  letter-spacing: -0.03em;
+}
+
+.analytics-section-heading p:last-child {
+  margin: 8px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* ================================
+   GROWTH CHART
+================================ */
+
+.growth-chart {
+  width: 100%;
+  height: 280px;
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e7eb;
+  color: #4f46e5;
+}
+
+.growth-chart svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.growth-chart-labels {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 15px;
+  overflow-x: auto;
+}
+
+.growth-chart-labels div {
+  min-width: 70px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.growth-chart-labels strong {
+  color: #111827;
+  font-size: 12px;
+}
+
+.growth-chart-labels span {
+  color: #9ca3af;
+  font-size: 11px;
+}
+
+/* ================================
+   ALLOCATION
+================================ */
+
+.allocation-row {
+  margin-bottom: 22px;
+}
+
+.allocation-row:last-child {
+  margin-bottom: 0;
+}
+
+.allocation-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.allocation-header strong {
+  color: #374151;
+  font-size: 14px;
+}
+
+.allocation-header span {
+  color: #111827;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.allocation-track {
+  width: 100%;
+  height: 11px;
+  overflow: hidden;
+  background: #eef0f3;
+  border-radius: 999px;
+}
+
+.allocation-bar {
+  height: 100%;
+  min-width: 4px;
+  background: #4f46e5;
+  border-radius: 999px;
+  transition: width 0.35s ease;
+}
+
+.allocation-row small {
+  display: block;
+  margin-top: 6px;
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+/* ================================
+   PERFORMANCE TABLE
+================================ */
+
+.analytics-performance-table {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.analytics-performance-header,
+.analytics-performance-row {
+  min-width: 800px;
+  display: grid;
+  grid-template-columns:
+    1.5fr
+    1fr
+    1fr
+    1fr
+    0.8fr;
+  gap: 20px;
+  align-items: center;
+}
+
+.analytics-performance-header {
+  padding: 15px 18px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  color: #6b7280;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.analytics-performance-row {
+  padding: 18px;
+  border-bottom: 1px solid #f0f1f3;
+}
+
+.analytics-performance-row:last-child {
+  border-bottom: none;
+}
+
+.analytics-performance-row > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.analytics-performance-row strong {
+  color: #111827;
+  font-size: 14px;
+}
+
+.analytics-performance-row small {
+  color: #9ca3af;
+  font-size: 11px;
+}
+
+.analytics-performance-row span {
+  color: #4b5563;
+  font-size: 13px;
+}
+
+/* ================================
+   INSIGHTS
+================================ */
+
+.analytics-insight-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(4, 1fr);
+  gap: 16px;
+}
+
+.analytics-insight {
+  padding: 20px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+}
+
+.analytics-insight span {
+  display: block;
+  margin-bottom: 9px;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.analytics-insight strong {
+  display: block;
+  color: #111827;
+  font-size: 17px;
+}
+
+.analytics-insight p {
+  margin: 7px 0 0;
+  color: #6b7280;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* ================================
+   EMPTY ANALYTICS
+================================ */
+
+.analytics-empty-page,
+.analytics-empty-card {
+  padding: 60px 25px;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 24px;
+  box-shadow:
+    0 4px 6px rgba(17, 24, 39, 0.02),
+    0 18px 45px rgba(17, 24, 39, 0.06);
+}
+
+.analytics-empty-page {
+  margin-top: 24px;
+}
+
+.analytics-empty-icon {
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: #eef2ff;
+  font-size: 27px;
+}
+
+.analytics-empty-page h2,
+.analytics-empty-card h3 {
+  margin: 0;
+  color: #111827;
+}
+
+.analytics-empty-page p,
+.analytics-empty-card p {
+  max-width: 500px;
+  margin: 10px auto 0;
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ================================
+   SNAPSHOT BUTTON
+================================ */
+
+.portfolio-snapshot-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  border-radius: 16px;
+}
+
+.portfolio-snapshot-card strong {
+  color: #3730a3;
+  font-size: 14px;
+}
+
+.portfolio-snapshot-card p {
+  margin: 5px 0 0;
+  color: #6366f1;
+  font-size: 12px;
+}
+
+.portfolio-snapshot-card button {
+  flex-shrink: 0;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 9px;
+  background: #4f46e5;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.portfolio-snapshot-card button:hover {
+  background: #4338ca;
+}
+
+/* ================================
+   ANALYTICS RESPONSIVE
+================================ */
+
+@media (max-width: 1000px) {
+  .analytics-summary {
+    grid-template-columns:
+      repeat(3, 1fr);
+  }
+
+  .analytics-insight-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .analytics-summary {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .analytics-chart-card,
+  .analytics-report-card,
+  .analytics-insights {
+    padding: 24px;
+    border-radius: 20px;
+  }
+
+  .portfolio-snapshot-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 500px) {
+  .analytics-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .analytics-insight-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .analytics-chart-card,
+  .analytics-report-card,
+  .analytics-insights {
+    padding: 20px;
+  }
+
+  .analytics-section-heading h2 {
+    font-size: 24px;
+  }
+
+  .growth-chart {
+    height: 220px;
+  }
+}
+
+/* ================================
+   NAVBAR DROPDOWN
+================================ */
+
+.navbar-dropdown {
+  position: relative;
+}
+
+.calculator-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+}
+
+.calculator-button:hover {
+  color: #111827;
+  background: transparent;
+}
+
+.calculator-button.active {
+  color: #4f46e5;
+  background: transparent;
+}
+
+.dropdown-arrow {
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+
+.calculator-button.active .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.calculator-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 190px;
+  padding: 7px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow:
+    0 10px 25px rgba(17, 24, 39, 0.08),
+    0 20px 45px rgba(17, 24, 39, 0.08);
+  z-index: 1100;
+}
+
+.calculator-menu-link {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: #4b5563;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.calculator-menu-link:hover {
+  color: #111827;
+  background: #f3f4f6;
+}
+
+.calculator-menu-link.active {
+  color: #4f46e5;
+  background: #eef2ff;
+}

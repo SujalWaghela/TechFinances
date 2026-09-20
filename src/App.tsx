@@ -8,6 +8,7 @@ import EmiCalculatorPage from "./pages/EmiCalculatorPage";
 import FdCalculatorPage from "./pages/FdCalculatorPage";
 import InvestmentComparisonPage from "./pages/InvestmentComparisonPage";
 import PortfolioTrackerPage from "./pages/PortfolioTrackerPage";
+import AnalyticsPage from "./pages/AnalyticsPage";
 
 import "./App.css";
 
@@ -45,6 +46,11 @@ function App() {
         <Route
           path="/portfolio"
           element={<PortfolioTrackerPage />}
+        />
+
+        <Route
+          path="/analytics"
+          element={<AnalyticsPage />}
         />
 
         <Route
