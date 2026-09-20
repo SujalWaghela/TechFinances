@@ -1,8 +1,6 @@
-import { Link, useLocation } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 function Navbar() {
-  const location = useLocation();
-
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -14,60 +12,47 @@ function Navbar() {
         </Link>
 
         <div className="navbar-links">
-          <Link
+          <NavLink
             to="/sip-calculator"
-            className={`nav-link ${
-              location.pathname === "/sip-calculator"
-                ? "active"
-                : ""
-            }`}
+            className="nav-link"
           >
             SIP Calculator
-          </Link>
+          </NavLink>
 
-          <Link
+          <NavLink
             to="/lumpsum-calculator"
-            className={`nav-link ${
-              location.pathname === "/lumpsum-calculator"
-                ? "active"
-                : ""
-            }`}
+            className="nav-link"
           >
             Lumpsum
-          </Link>
+          </NavLink>
 
-          <Link
+          <NavLink
             to="/emi-calculator"
-            className={`nav-link ${
-              location.pathname === "/emi-calculator"
-                ? "active"
-                : ""
-            }`}
+            className="nav-link"
           >
             EMI Calculator
-          </Link>
+          </NavLink>
 
-          <Link
+          <NavLink
             to="/fd-calculator"
-            className={`nav-link ${
-              location.pathname === "/fd-calculator"
-                ? "active"
-                : ""
-            }`}
+            className="nav-link"
           >
             FD Calculator
-          </Link>
+          </NavLink>
 
-          <Link
+          <NavLink
             to="/compare-investments"
-            className={`nav-link ${
-              location.pathname === "/compare-investments"
-                ? "active"
-                : ""
-            }`}
+            className="nav-link"
           >
             Compare
-          </Link>
+          </NavLink>
+
+          <NavLink
+            to="/portfolio"
+            className="nav-link"
+          >
+            Portfolio
+          </NavLink>
         </div>
       </div>
     </nav>
