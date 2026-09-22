@@ -10,6 +10,22 @@ export function calculateEMI(
   years: number
 ): EmiResult {
   const months = years * 12;
+
+  if (
+    !Number.isFinite(loanAmount) ||
+    !Number.isFinite(annualInterestRate) ||
+    !Number.isFinite(years) ||
+    loanAmount <= 0 ||
+    years <= 0 ||
+    months <= 0
+  ) {
+    return {
+      monthlyEMI: 0,
+      totalInterest: 0,
+      totalPayment: 0,
+    };
+  }
+
   const monthlyRate = annualInterestRate / 12 / 100;
 
   let monthlyEMI: number;

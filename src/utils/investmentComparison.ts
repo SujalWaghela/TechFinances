@@ -1,3 +1,7 @@
+import { calculateSIP } from "./sipCalculator";
+import { calculateLumpsum } from "./lumpsumCalculator";
+import { calculateFD } from "./fdCalculator";
+
 export type InvestmentMode = "monthly" | "lumpsum";
 
 export interface InvestmentOption {
@@ -50,6 +54,11 @@ export const defaultInvestmentOptions: InvestmentOption[] = [
   },
 ];
 
+/**
+ * Uses the same calculator functions as the dedicated pages so Compare
+ * numbers stay in lockstep with SIP / Lumpsum / FD results.
+ * Fixed Deposit in lumpsum mode uses quarterly compounding (calculateFD).
+ */
 export function calculateInvestmentComparison(
   amount: number,
   years: number,
@@ -61,26 +70,17 @@ export function calculateInvestmentComparison(
     let estimatedValue: number;
 
     if (mode === "monthly") {
-      const months = years * 12;
-      const monthlyRate = option.returnRate / 12 / 100;
-
-      investedAmount = amount * months;
-
-      if (monthlyRate === 0) {
-        estimatedValue = investedAmount;
-      } else {
-        estimatedValue =
-          amount *
-          ((Math.pow(1 + monthlyRate, months) - 1) /
-            monthlyRate) *
-          (1 + monthlyRate);
-      }
+      const sip = calculateSIP(amount, option.returnRate, years);
+      investedAmount = sip.investedAmount;
+      estimatedValue = sip.futureValue;
+    } else if (option.id === "fixed-deposit") {
+      const fd = calculateFD(amount, option.returnRate, years);
+      investedAmount = fd.principal;
+      estimatedValue = fd.maturityAmount;
     } else {
-      investedAmount = amount;
-
-      estimatedValue =
-        amount *
-        Math.pow(1 + option.returnRate / 100, years);
+      const lumpsum = calculateLumpsum(amount, option.returnRate, years);
+      investedAmount = lumpsum.investedAmount;
+      estimatedValue = lumpsum.futureValue;
     }
 
     return {
