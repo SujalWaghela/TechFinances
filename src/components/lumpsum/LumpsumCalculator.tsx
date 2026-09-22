@@ -1,6 +1,7 @@
 import { useState } from "react";
 import LumpsumInput from "./LumpsumInput";
 import LumpsumResult from "./LumpsumResult";
+import RealityCheck from "../common/RealityCheck";
 import { calculateLumpsum } from "../../utils/lumpsumCalculator";
 
 function LumpsumCalculator() {
@@ -53,6 +54,16 @@ function LumpsumCalculator() {
         investedAmount={result.investedAmount}
         estimatedReturns={result.estimatedReturns}
         futureValue={result.futureValue}
+      />
+
+      <RealityCheck
+        estimatedValue={result.futureValue}
+        investedAmount={result.investedAmount}
+        years={years}
+        taxLabel="Tax on Profit (%)"
+        defaultTaxRate={10}
+        defaultFeeRate={1}
+        defaultInflationRate={6}
       />
     </div>
   );

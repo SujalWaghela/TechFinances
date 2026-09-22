@@ -1,8 +1,16 @@
 import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 function Navbar() {
   const [calculatorOpen, setCalculatorOpen] = useState(false);
+  const { user, isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    logout();
+    navigate("/login");
+  }
 
   return (
     <nav className="navbar">
@@ -72,6 +80,39 @@ function Navbar() {
               </div>
             )}
           </div>
+
+          {isAuthenticated && user ? (
+            <div className="navbar-auth">
+              <NavLink to="/profile" className="nav-link nav-profile-link">
+                <span className="nav-avatar">
+                  {user.name
+                    .split(" ")
+                    .filter(Boolean)
+                    .slice(0, 2)
+                    .map((part) => part[0]?.toUpperCase() ?? "")
+                    .join("") || "TF"}
+                </span>
+                <span className="nav-profile-name">{user.name.split(" ")[0]}</span>
+              </NavLink>
+
+              <button
+                type="button"
+                className="nav-logout-button"
+                onClick={handleLogout}
+              >
+                Log out
+              </button>
+            </div>
+          ) : (
+            <div className="navbar-auth">
+              <NavLink to="/login" className="nav-link">
+                Log in
+              </NavLink>
+              <NavLink to="/register" className="nav-cta">
+                Sign up
+              </NavLink>
+            </div>
+          )}
         </div>
       </div>
     </nav>

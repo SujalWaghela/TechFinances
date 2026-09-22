@@ -1,7 +1,4 @@
-import type {
-  PortfolioInvestment,
-  PortfolioInvestmentResult,
-} from "../../utils/portfolioCalculator";
+import type { PortfolioInvestmentResult } from "../../utils/portfolioCalculator";
 
 interface PortfolioTableProps {
   investments: PortfolioInvestmentResult[];

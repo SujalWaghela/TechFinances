@@ -31,14 +31,6 @@ export interface PortfolioSummary {
   returnPercentage: number;
 }
 
-export interface PortfolioSnapshot {
-  id: string;
-  date: string;
-  totalInvested: number;
-  currentValue: number;
-  totalGain: number;
-}
-
 export function calculateInvestmentResult(
   investment: PortfolioInvestment
 ): PortfolioInvestmentResult {

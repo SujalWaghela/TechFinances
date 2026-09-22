@@ -1,6 +1,7 @@
 import { useState } from "react";
 import FdInput from "./FdInput";
 import FdResult from "./FdResult";
+import RealityCheck from "../common/RealityCheck";
 import { calculateFD } from "../../utils/fdCalculator";
 
 function FdCalculator() {
@@ -54,6 +55,16 @@ function FdCalculator() {
         principal={result.principal}
         interest={result.interest}
         maturityAmount={result.maturityAmount}
+      />
+
+      <RealityCheck
+        estimatedValue={result.maturityAmount}
+        investedAmount={result.principal}
+        years={years}
+        taxLabel="Tax on Interest (%)"
+        defaultTaxRate={20}
+        defaultFeeRate={0}
+        defaultInflationRate={6}
       />
 
     </div>

@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
 import AnalyticsSummary from "./AnalyticsSummary";
-import GrowthChart from "./GrowthChart";
 import AllocationChart from "./AllocationChart";
 import PerformanceReport from "./PerformanceReport";
 import AnalyticsInsights from "./AnalyticsInsights";
@@ -10,102 +9,60 @@ import {
   calculateInvestmentResult,
   calculatePortfolioSummary,
   type PortfolioInvestment,
-  type PortfolioSnapshot,
 } from "../../utils/portfolioCalculator";
+import { calculateAllocation } from "../../utils/analyticsCalculator";
+import { loadUserPortfolio } from "../../utils/userDataStorage";
 
-import {
-  calculateAllocation,
-  calculateGrowth,
-} from "../../utils/analyticsCalculator";
+interface AnalyticsDashboardProps {
+  userId: string;
+}
 
-const PORTFOLIO_KEY =
-  "techfinance-portfolio";
+function AnalyticsDashboard({ userId }: AnalyticsDashboardProps) {
+  const [investments, setInvestments] = useState<PortfolioInvestment[]>(() =>
+    loadUserPortfolio(userId)
+  );
 
-const SNAPSHOT_KEY =
-  "techfinance-portfolio-snapshots";
+  useEffect(() => {
+    function refresh() {
+      setInvestments(loadUserPortfolio(userId));
+    }
 
-function AnalyticsDashboard() {
-  const [investments] =
-    useState<PortfolioInvestment[]>(() => {
-      try {
-        const saved =
-          localStorage.getItem(
-            PORTFOLIO_KEY
-          );
+    refresh();
 
-        return saved
-          ? JSON.parse(saved)
-          : [];
-      } catch {
-        return [];
-      }
-    });
+    window.addEventListener("focus", refresh);
+    document.addEventListener("visibilitychange", refresh);
 
-  const [snapshots] =
-    useState<PortfolioSnapshot[]>(() => {
-      try {
-        const saved =
-          localStorage.getItem(
-            SNAPSHOT_KEY
-          );
-
-        return saved
-          ? JSON.parse(saved)
-          : [];
-      } catch {
-        return [];
-      }
-    });
+    return () => {
+      window.removeEventListener("focus", refresh);
+      document.removeEventListener("visibilitychange", refresh);
+    };
+  }, [userId]);
 
   const results = useMemo(
-    () =>
-      investments.map(
-        calculateInvestmentResult
-      ),
+    () => investments.map(calculateInvestmentResult),
     [investments]
   );
 
   const summary = useMemo(
-    () =>
-      calculatePortfolioSummary(
-        investments
-      ),
+    () => calculatePortfolioSummary(investments),
     [investments]
   );
 
   const allocation = useMemo(
-    () =>
-      calculateAllocation(results),
+    () => calculateAllocation(results),
     [results]
   );
-
-  const growth = useMemo(
-    () =>
-      calculateGrowth(snapshots),
-    [snapshots]
-  );
-
-  useEffect(() => {
-    // Re-render whenever the analytics
-    // page becomes visible again after
-    // changes on the portfolio page.
-  }, []);
 
   if (investments.length === 0) {
     return (
       <div className="analytics-empty-page">
-        <div className="analytics-empty-icon">
-          📊
-        </div>
+        <div className="analytics-empty-icon">📊</div>
 
-        <h2>
-          No Portfolio Data Yet
-        </h2>
+        <h2>No Portfolio Data Yet</h2>
 
         <p>
-          Add investments to your Portfolio
-          Tracker first. Your investment data
-          will appear here automatically.
+          Add investments to your Portfolio Tracker first. Your account&apos;s
+          investment data will appear here automatically.
         </p>
       </div>
     );
@@ -114,32 +71,16 @@ function AnalyticsDashboard() {
   return (
     <div className="analytics-dashboard">
       <AnalyticsSummary
-        totalInvested={
-          summary.totalInvested
-        }
-        currentValue={
-          summary.currentValue
-        }
+        totalInvested={summary.totalInvested}
+        currentValue={summary.currentValue}
         totalGain={summary.totalGain}
-        returnPercentage={
-          summary.returnPercentage
-        }
-        investmentCount={
-          investments.length
-        }
+        returnPercentage={summary.returnPercentage}
+        investmentCount={investments.length}
       />
 
-      <GrowthChart
-        snapshots={growth}
-      />
+      <AllocationChart allocation={allocation} />
 
-      <AllocationChart
-        allocation={allocation}
-      />
-
-      <PerformanceReport
-        investments={results}
-      />
+      <PerformanceReport investments={results} />
 
       <AnalyticsInsights
         investments={results}
@@ -150,12 +91,9 @@ function AnalyticsDashboard() {
         <strong>Important:</strong>
 
         <p>
-          Analytical reports are calculated
-          from the investment values and
-          portfolio snapshots entered by the
-          user. They are intended for tracking
-          and evaluation, not as investment
-          recommendations.
+          Analytical reports are calculated from the investment values saved to
+          your account. They are intended for tracking and evaluation, not as
+          investment recommendations.
         </p>
       </div>
     </div>

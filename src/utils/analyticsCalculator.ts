@@ -1,7 +1,4 @@
-import type {
-  PortfolioInvestmentResult,
-  PortfolioSnapshot,
-} from "./portfolioCalculator";
+import type { PortfolioInvestmentResult } from "./portfolioCalculator";
 
 export interface AllocationResult {
   type: string;
@@ -39,16 +36,6 @@ export function calculateAllocation(
     .sort(
       (a, b) => b.value - a.value
     );
-}
-
-export function calculateGrowth(
-  snapshots: PortfolioSnapshot[]
-): PortfolioSnapshot[] {
-  return [...snapshots].sort(
-    (a, b) =>
-      new Date(a.date).getTime() -
-      new Date(b.date).getTime()
-  );
 }
 
 export function getBestInvestment(

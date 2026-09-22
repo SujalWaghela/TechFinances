@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SipInput from "./SipInput";
 import SipResult from "./SipResult";
+import RealityCheck from "../common/RealityCheck";
 import { calculateSIP } from "../../utils/sipCalculator";
 
 function SipCalculator() {
@@ -51,6 +52,16 @@ function SipCalculator() {
         investedAmount={result.investedAmount}
         estimatedReturns={result.estimatedReturns}
         futureValue={result.futureValue}
+      />
+
+      <RealityCheck
+        estimatedValue={result.futureValue}
+        investedAmount={result.investedAmount}
+        years={years}
+        taxLabel="Tax on Profit (%)"
+        defaultTaxRate={10}
+        defaultFeeRate={1}
+        defaultInflationRate={6}
       />
     </div>
   );
