@@ -54,7 +54,11 @@ function App() {
 
           <Route
             path="/risk-profiler"
-            element={<RiskProfilerPage />}
+            element={
+              <ProtectedRoute featureName="Risk Profiler">
+                <RiskProfilerPage />
+              </ProtectedRoute>
+            }
           />
 
           <Route
@@ -65,7 +69,7 @@ function App() {
           <Route
             path="/portfolio"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute featureName="Portfolio">
                 <PortfolioTrackerPage />
               </ProtectedRoute>
             }
@@ -74,7 +78,7 @@ function App() {
           <Route
             path="/analytics"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute featureName="Analytics">
                 <AnalyticsPage />
               </ProtectedRoute>
             }
@@ -86,7 +90,7 @@ function App() {
           <Route
             path="/profile"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute featureName="Profile">
                 <ProfilePage />
               </ProtectedRoute>
             }
