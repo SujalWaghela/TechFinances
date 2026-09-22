@@ -4,14 +4,22 @@ import AnalyticsSummary from "./AnalyticsSummary";
 import AllocationChart from "./AllocationChart";
 import PerformanceReport from "./PerformanceReport";
 import AnalyticsInsights from "./AnalyticsInsights";
+import PortfolioTrendChart from "./PortfolioTrendChart";
+import PerformanceSummaryCard from "../portfolio/PerformanceSummaryCard";
 
 import {
   calculateInvestmentResult,
+  calculatePortfolioMetrics,
   calculatePortfolioSummary,
   type PortfolioInvestment,
 } from "../../utils/portfolioCalculator";
 import { calculateAllocation } from "../../utils/analyticsCalculator";
-import { loadUserPortfolio } from "../../utils/userDataStorage";
+import {
+  loadPortfolioHistory,
+  loadUserPortfolio,
+  type PortfolioHistoryPoint,
+} from "../../utils/userDataStorage";
+import { generatePortfolioReport } from "../../utils/reportGenerator";
 
 interface AnalyticsDashboardProps {
   userId: string;
@@ -21,10 +29,14 @@ function AnalyticsDashboard({ userId }: AnalyticsDashboardProps) {
   const [investments, setInvestments] = useState<PortfolioInvestment[]>(() =>
     loadUserPortfolio(userId)
   );
+  const [history, setHistory] = useState<PortfolioHistoryPoint[]>(() =>
+    loadPortfolioHistory(userId)
+  );
 
   useEffect(() => {
     function refresh() {
       setInvestments(loadUserPortfolio(userId));
+      setHistory(loadPortfolioHistory(userId));
     }
 
     refresh();
@@ -45,6 +57,11 @@ function AnalyticsDashboard({ userId }: AnalyticsDashboardProps) {
 
   const summary = useMemo(
     () => calculatePortfolioSummary(investments),
+    [investments]
+  );
+
+  const performanceMetrics = useMemo(
+    () => calculatePortfolioMetrics(investments),
     [investments]
   );
 
@@ -70,6 +87,18 @@ function AnalyticsDashboard({ userId }: AnalyticsDashboardProps) {
 
   return (
     <div className="analytics-dashboard">
+      <div className="analytics-report-actions">
+        <button
+          type="button"
+          className="portfolio-refresh-button"
+          onClick={() =>
+            generatePortfolioReport(investments, performanceMetrics)
+          }
+        >
+          Download Report
+        </button>
+      </div>
+
       <AnalyticsSummary
         totalInvested={summary.totalInvested}
         currentValue={summary.currentValue}
@@ -77,6 +106,10 @@ function AnalyticsDashboard({ userId }: AnalyticsDashboardProps) {
         returnPercentage={summary.returnPercentage}
         investmentCount={investments.length}
       />
+
+      <PerformanceSummaryCard metrics={performanceMetrics} />
+
+      <PortfolioTrendChart history={history} />
 
       <AllocationChart allocation={allocation} />
 

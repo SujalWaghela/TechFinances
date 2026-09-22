@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import { AuthProvider } from "./context/AuthContext";
 import Navbar from "./components/common/Navbar";
+import Footer from "./components/common/Footer";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 
 import SipCalculatorPage from "./pages/SipCalculatorPage";
@@ -15,6 +16,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
 import RiskProfilerPage from "./pages/RiskProfilerPage";
+import InvestmentInstrumentsPage from "./pages/InvestmentInstrumentsPage";
 
 import "./App.css";
 
@@ -56,6 +58,11 @@ function App() {
           />
 
           <Route
+            path="/investment-instruments"
+            element={<InvestmentInstrumentsPage />}
+          />
+
+          <Route
             path="/portfolio"
             element={
               <ProtectedRoute>
@@ -86,15 +93,27 @@ function App() {
           />
 
           <Route
+            path="/"
+            element={
+              <Navigate
+                to="/portfolio"
+                replace
+              />
+            }
+          />
+
+          <Route
             path="*"
             element={
               <Navigate
-                to="/sip-calculator"
+                to="/portfolio"
                 replace
               />
             }
           />
         </Routes>
+
+        <Footer />
       </BrowserRouter>
     </AuthProvider>
   );

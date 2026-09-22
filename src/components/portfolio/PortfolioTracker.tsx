@@ -1,19 +1,23 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import PortfolioInput from "./PortfolioInput";
 import PortfolioSummary from "./PortfolioSummary";
 import PortfolioTable from "./PortfolioTable";
 import PortfolioChart from "./PortfolioChart";
+import PerformanceSummaryCard from "./PerformanceSummaryCard";
 
 import {
   calculateInvestmentResult,
+  calculatePortfolioMetrics,
   calculatePortfolioSummary,
   type PortfolioInvestment,
 } from "../../utils/portfolioCalculator";
 import {
+  appendPortfolioHistory,
   loadUserPortfolio,
   saveUserPortfolio,
 } from "../../utils/userDataStorage";
+import { generatePortfolioReport } from "../../utils/reportGenerator";
 import {
   getMutualFundNav,
   getNavValue,
@@ -51,11 +55,13 @@ function PortfolioTracker({ userId }: PortfolioTrackerProps) {
   const [refreshing, setRefreshing] = useState(false);
   const [refreshError, setRefreshError] = useState<string | null>(null);
   const [lastRefreshedAt, setLastRefreshedAt] = useState<string | null>(null);
+  const historySnapshotTaken = useRef(false);
 
   useEffect(() => {
     const loaded = loadUserPortfolio(userId);
     setInvestments(loaded);
     setHydrated(true);
+    historySnapshotTaken.current = false;
 
     const latest = loaded
       .map((item) => item.lastPriceUpdated)
@@ -83,6 +89,30 @@ function PortfolioTracker({ userId }: PortfolioTrackerProps) {
     () => calculatePortfolioSummary(investments),
     [investments]
   );
+
+  const performanceMetrics = useMemo(
+    () => calculatePortfolioMetrics(investments),
+    [investments]
+  );
+
+  useEffect(() => {
+    if (!hydrated || investments.length === 0 || historySnapshotTaken.current) {
+      return;
+    }
+
+    historySnapshotTaken.current = true;
+    appendPortfolioHistory(userId, {
+      date: new Date().toISOString(),
+      totalValue: summary.currentValue,
+      totalInvested: summary.totalInvested,
+    });
+  }, [
+    hydrated,
+    userId,
+    investments.length,
+    summary.currentValue,
+    summary.totalInvested,
+  ]);
 
   const refreshableCount = useMemo(
     () =>
@@ -256,6 +286,10 @@ function PortfolioTracker({ userId }: PortfolioTrackerProps) {
 
       <PortfolioSummary summary={summary} />
 
+      {investments.length > 0 && (
+        <PerformanceSummaryCard metrics={performanceMetrics} />
+      )}
+
       <div className="portfolio-holdings-header">
         <div>
           <p className="eyebrow">YOUR PORTFOLIO</p>
@@ -287,6 +321,18 @@ function PortfolioTracker({ userId }: PortfolioTrackerProps) {
           {investments.length > 0 && (
             <button
               type="button"
+              className="portfolio-refresh-button"
+              onClick={() =>
+                generatePortfolioReport(investments, performanceMetrics)
+              }
+            >
+              Download Report
+            </button>
+          )}
+
+          {investments.length > 0 && (
+            <button
+              type="button"
               className="portfolio-clear-button"
               onClick={handleClearPortfolio}
             >
@@ -311,9 +357,10 @@ function PortfolioTracker({ userId }: PortfolioTrackerProps) {
         <strong>Important:</strong>
 
         <p>
-          Current values use live NSE/BSE prices from Twelve Data and mutual
-          fund NAVs from mfapi.in when available. Free API tiers are
-          rate-limited — wait a moment between refreshes if you hit the limit.
+          Current values use live NSE/BSE prices (Twelve Data when available,
+          with Yahoo Finance fallback on the free plan) and mutual fund NAVs
+          from mfapi.in. Free API tiers are rate-limited — wait a moment
+          between refreshes if you hit the limit.
         </p>
       </div>
     </div>

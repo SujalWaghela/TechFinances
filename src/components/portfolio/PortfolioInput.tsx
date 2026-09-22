@@ -112,6 +112,7 @@ function PortfolioInput({ onAddInvestment }: PortfolioInputProps) {
         exchange: selected.exchange,
         liveAssetKind: selected.type,
         lastPriceUpdated: new Date().toISOString(),
+        investedAt: new Date().toISOString(),
       };
 
       onAddInvestment(investment);
@@ -140,7 +141,7 @@ function PortfolioInput({ onAddInvestment }: PortfolioInputProps) {
 
         <p>
           Search NSE/BSE stocks and Indian mutual funds. Live price / NAV is
-          fetched automatically — no manual current price needed.
+          fetched automatically.
         </p>
       </div>
 

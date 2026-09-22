@@ -7,8 +7,13 @@ import type {
 const TWELVE_DATA_BASE = "https://api.twelvedata.com";
 
 function getApiKey(): string {
-  const key = import.meta.env.VITE_TWELVEDATA_API_KEY;
-  return typeof key === "string" ? key.trim() : "";
+  const raw = import.meta.env.VITE_TWELVEDATA_API_KEY;
+  if (typeof raw !== "string") {
+    return "";
+  }
+
+  // Strip accidental quotes/spaces from .env values like KEY="abc"
+  return raw.trim().replace(/^['"]|['"]$/g, "");
 }
 
 export class StockApiError extends Error {
@@ -42,14 +47,33 @@ interface TwelveDataPriceResponse extends TwelveDataErrorBody {
   price?: string | number;
 }
 
+interface YahooChartResponse {
+  chart?: {
+    result?: Array<{
+      meta?: {
+        regularMarketPrice?: number;
+        previousClose?: number;
+        symbol?: string;
+      };
+    }>;
+    error?: { description?: string } | null;
+  };
+}
+
 function isIndianExchange(value: string): value is IndianExchange {
   return value === "NSE" || value === "BSE";
 }
 
+function toYahooSymbol(symbol: string, exchange: IndianExchange): string {
+  const clean = symbol.trim().toUpperCase().replace(/\.(NS|BO)$/i, "");
+  return exchange === "BSE" ? `${clean}.BO` : `${clean}.NS`;
+}
+
 function throwIfApiError(data: TwelveDataErrorBody, fallback: string): void {
   const code = typeof data.code === "string" ? Number(data.code) : data.code;
+  const message = (data.message || "").toLowerCase();
 
-  if (code === 429 || data.message?.toLowerCase().includes("api credits")) {
+  if (code === 429 || message.includes("api credits")) {
     throw new StockApiError(
       "Twelve Data rate limit reached. Please wait a moment and try again."
     );
@@ -60,6 +84,19 @@ function throwIfApiError(data: TwelveDataErrorBody, fallback: string): void {
   }
 }
 
+function isPlanRestrictedError(error: unknown): boolean {
+  if (!(error instanceof Error)) {
+    return false;
+  }
+
+  const message = error.message.toLowerCase();
+  return (
+    message.includes("grow or venture") ||
+    message.includes("consider upgrading") ||
+    message.includes("available starting with")
+  );
+}
+
 async function twelveDataFetch(
   path: string,
   params: Record<string, string>
@@ -68,7 +105,7 @@ async function twelveDataFetch(
 
   if (!apiKey) {
     throw new StockApiError(
-      "Twelve Data API key missing. Add VITE_TWELVEDATA_API_KEY to your .env file."
+      "Twelve Data API key missing. Add VITE_TWELVEDATA_API_KEY to your .env file (not .env.example), then restart npm run dev."
     );
   }
 
@@ -105,7 +142,9 @@ async function twelveDataFetch(
   try {
     data = await response.json();
   } catch {
-    throw new StockApiError(`Twelve Data returned an invalid response (${response.status}).`);
+    throw new StockApiError(
+      `Twelve Data returned an invalid response (${response.status}).`
+    );
   }
 
   if (!response.ok) {
@@ -118,6 +157,48 @@ async function twelveDataFetch(
   return data;
 }
 
+async function getYahooQuote(
+  symbol: string,
+  exchange: IndianExchange
+): Promise<StockQuote> {
+  const yahooSymbol = toYahooSymbol(symbol, exchange);
+  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(
+    yahooSymbol
+  )}?interval=1d&range=1d`;
+
+  let response: Response;
+
+  try {
+    response = await fetch(url);
+  } catch {
+    throw new StockApiError(
+      `Unable to fetch live price for ${symbol} (${exchange}).`
+    );
+  }
+
+  if (!response.ok) {
+    throw new StockApiError(
+      `Live price unavailable for ${symbol} (${exchange}).`
+    );
+  }
+
+  const data = (await response.json()) as YahooChartResponse;
+  const meta = data.chart?.result?.[0]?.meta;
+  const price = Number(meta?.regularMarketPrice ?? meta?.previousClose);
+
+  if (!Number.isFinite(price) || price <= 0) {
+    throw new StockApiError(
+      `No live price available for ${symbol} (${exchange}).`
+    );
+  }
+
+  return {
+    c: price,
+    symbol: symbol.trim().toUpperCase(),
+    exchange,
+  };
+}
+
 export async function searchStocks(query: string): Promise<StockSearchResult[]> {
   const trimmed = query.trim();
 
@@ -125,25 +206,53 @@ export async function searchStocks(query: string): Promise<StockSearchResult[]> 
     return [];
   }
 
-  const data = (await twelveDataFetch("/symbol_search", {
-    symbol: trimmed,
-  })) as TwelveDataSearchResponse;
+  // Prefer the full query; also try the first word (e.g. "Jio" from "Jio Financial").
+  const candidates = [trimmed];
+  const firstWord = trimmed.split(/\s+/)[0];
+  if (
+    firstWord &&
+    firstWord.toLowerCase() !== trimmed.toLowerCase() &&
+    firstWord.length >= 2
+  ) {
+    candidates.push(firstWord);
+  }
 
-  const rows = Array.isArray(data.data) ? data.data : [];
+  const seen = new Set<string>();
+  const results: StockSearchResult[] = [];
 
-  return rows
-    .filter(
-      (item): item is TwelveDataSearchItem & { exchange: IndianExchange } =>
-        isIndianExchange(item.exchange) && Boolean(item.symbol)
-    )
-    .map((item) => ({
-      symbol: item.symbol,
-      instrumentName: item.instrument_name || item.symbol,
-      exchange: item.exchange,
-      instrumentType: item.instrument_type || "Equity",
-      currency: item.currency || "INR",
-    }))
-    .slice(0, 8);
+  for (const candidate of candidates) {
+    const data = (await twelveDataFetch("/symbol_search", {
+      symbol: candidate,
+    })) as TwelveDataSearchResponse;
+
+    const rows = Array.isArray(data.data) ? data.data : [];
+
+    rows
+      .filter(
+        (item): item is TwelveDataSearchItem & { exchange: IndianExchange } =>
+          isIndianExchange(item.exchange) && Boolean(item.symbol)
+      )
+      .forEach((item) => {
+        const key = `${item.symbol}|${item.exchange}`;
+        if (seen.has(key)) {
+          return;
+        }
+        seen.add(key);
+        results.push({
+          symbol: item.symbol,
+          instrumentName: item.instrument_name || item.symbol,
+          exchange: item.exchange,
+          instrumentType: item.instrument_type || "Equity",
+          currency: item.currency || "INR",
+        });
+      });
+
+    if (results.length >= 8) {
+      break;
+    }
+  }
+
+  return results.slice(0, 8);
 }
 
 export async function getStockQuote(
@@ -157,29 +266,45 @@ export async function getStockQuote(
     throw new StockApiError("Only NSE and BSE stocks are supported.");
   }
 
-  const data = (await twelveDataFetch("/price", {
-    symbol: cleanSymbol,
-    exchange: cleanExchange,
-  })) as TwelveDataPriceResponse;
+  try {
+    const data = (await twelveDataFetch("/price", {
+      symbol: cleanSymbol,
+      exchange: cleanExchange,
+    })) as TwelveDataPriceResponse;
 
-  const price = Number(data.price);
+    const price = Number(data.price);
 
-  if (!Number.isFinite(price) || price <= 0) {
-    throw new StockApiError(
-      `No live price available for ${cleanSymbol} (${cleanExchange}).`
-    );
+    if (Number.isFinite(price) && price > 0) {
+      return {
+        c: price,
+        symbol: cleanSymbol,
+        exchange: cleanExchange,
+      };
+    }
+  } catch (error: unknown) {
+    // Free Twelve Data plans omit many NSE/BSE symbols — fall back below.
+    if (
+      error instanceof StockApiError &&
+      !isPlanRestrictedError(error) &&
+      !error.message.toLowerCase().includes("no live price") &&
+      !error.message.toLowerCase().includes("request failed")
+    ) {
+      // Still try Yahoo for most quote failures except missing API key / auth.
+      if (
+        error.message.includes("API key missing") ||
+        error.message.includes("rejected the API key")
+      ) {
+        throw error;
+      }
+    }
   }
 
-  return {
-    c: price,
-    symbol: cleanSymbol,
-    exchange: cleanExchange,
-  };
+  return getYahooQuote(cleanSymbol, cleanExchange);
 }
 
 /**
- * Fetch live prices for multiple symbols on the same exchange in one request.
- * Returns a map of SYMBOL → price. Missing/failed symbols are omitted.
+ * Fetch live prices for multiple symbols on the same exchange.
+ * Uses Twelve Data batch when possible, then fills gaps via Yahoo Finance.
  */
 export async function getStockPricesBatch(
   symbols: string[],
@@ -187,9 +312,7 @@ export async function getStockPricesBatch(
 ): Promise<Record<string, number>> {
   const unique = [
     ...new Set(
-      symbols
-        .map((symbol) => symbol.trim().toUpperCase())
-        .filter(Boolean)
+      symbols.map((symbol) => symbol.trim().toUpperCase()).filter(Boolean)
     ),
   ];
 
@@ -197,57 +320,63 @@ export async function getStockPricesBatch(
     return {};
   }
 
-  if (unique.length === 1) {
-    const quote = await getStockQuote(unique[0], exchange);
-    return { [unique[0]]: quote.c };
-  }
-
-  const data = await twelveDataFetch("/price", {
-    symbol: unique.join(","),
-    exchange,
-  });
-
-  // Single-shape fallback (some plans may still return { price } for 1 item)
-  if (
-    data &&
-    typeof data === "object" &&
-    "price" in data &&
-    !unique.some((symbol) => symbol in (data as Record<string, unknown>))
-  ) {
-    const price = Number((data as TwelveDataPriceResponse).price);
-    if (Number.isFinite(price) && price > 0) {
-      return { [unique[0]]: price };
-    }
-    return {};
-  }
-
   const prices: Record<string, number> = {};
-  const payload = data as Record<string, TwelveDataPriceResponse>;
 
-  unique.forEach((symbol) => {
-    const entry = payload[symbol];
-    if (!entry) {
-      return;
+  try {
+    if (unique.length === 1) {
+      const quote = await getStockQuote(unique[0], exchange);
+      prices[unique[0]] = quote.c;
+      return prices;
     }
 
-    const code =
-      typeof entry.code === "string" ? Number(entry.code) : entry.code;
+    const data = await twelveDataFetch("/price", {
+      symbol: unique.join(","),
+      exchange,
+    });
 
-    if (code === 429) {
-      throw new StockApiError(
-        "Twelve Data rate limit reached. Please wait a moment and try again."
-      );
+    if (
+      data &&
+      typeof data === "object" &&
+      "price" in data &&
+      !unique.some((symbol) => symbol in (data as Record<string, unknown>))
+    ) {
+      const price = Number((data as TwelveDataPriceResponse).price);
+      if (Number.isFinite(price) && price > 0) {
+        prices[unique[0]] = price;
+      }
+    } else {
+      const payload = data as Record<string, TwelveDataPriceResponse>;
+
+      unique.forEach((symbol) => {
+        const entry = payload[symbol];
+        if (!entry || entry.status === "error") {
+          return;
+        }
+
+        const price = Number(entry.price);
+        if (Number.isFinite(price) && price > 0) {
+          prices[symbol] = price;
+        }
+      });
+    }
+  } catch {
+    // Fall through to Yahoo fill below.
+  }
+
+  for (const symbol of unique) {
+    if (prices[symbol]) {
+      continue;
     }
 
-    if (entry.status === "error") {
-      return;
+    try {
+      const quote = await getYahooQuote(symbol, exchange);
+      prices[symbol] = quote.c;
+    } catch {
+      // Leave missing; caller reports partial failures.
     }
 
-    const price = Number(entry.price);
-    if (Number.isFinite(price) && price > 0) {
-      prices[symbol] = price;
-    }
-  });
+    await delay(200);
+  }
 
   return prices;
 }

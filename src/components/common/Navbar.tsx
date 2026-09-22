@@ -14,7 +14,7 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <Link to="/sip-calculator" className="navbar-logo">
+        <Link to="/portfolio" className="navbar-logo">
           Tech<span>Finance</span>
         </Link>
 
@@ -29,6 +29,10 @@ function Navbar() {
 
           <NavLink to="/risk-profiler" className="nav-link">
             Risk Profiler
+          </NavLink>
+
+          <NavLink to="/investment-instruments" className="nav-link">
+            Learn
           </NavLink>
 
           <CalculatorsDropdown />
