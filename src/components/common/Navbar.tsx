@@ -32,6 +32,10 @@ function Navbar() {
             Compare
           </NavLink>
 
+          <NavLink to="/risk-profiler" className="nav-link">
+            Risk Profiler
+          </NavLink>
+
           <div className="navbar-dropdown">
             <button
               type="button"

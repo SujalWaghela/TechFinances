@@ -14,6 +14,7 @@ import AnalyticsPage from "./pages/AnalyticsPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
+import RiskProfilerPage from "./pages/RiskProfilerPage";
 
 import "./App.css";
 
@@ -47,6 +48,11 @@ function App() {
           <Route
             path="/compare-investments"
             element={<InvestmentComparisonPage />}
+          />
+
+          <Route
+            path="/risk-profiler"
+            element={<RiskProfilerPage />}
           />
 
           <Route
