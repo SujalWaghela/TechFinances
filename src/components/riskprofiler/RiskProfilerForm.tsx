@@ -112,7 +112,7 @@ function RiskProfilerForm({
       ))}
 
       <button type="submit" className="risk-profiler-submit">
-        Analyse Risk Profile
+        See my risk profile
       </button>
     </form>
   );

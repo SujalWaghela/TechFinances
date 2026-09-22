@@ -35,11 +35,10 @@ function RegisterPage() {
   return (
     <main className="auth-page">
       <div className="auth-card">
-        <p className="eyebrow">GET STARTED</p>
+        <p className="eyebrow">New here</p>
         <h1>Create account</h1>
         <p className="auth-subtitle">
-          Save your profile details and personalize your TechFinance
-          experience.
+          Save your portfolio and preferences on this device.
         </p>
 
         <form className="auth-form" onSubmit={handleSubmit}>

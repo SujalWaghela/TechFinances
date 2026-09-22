@@ -275,7 +275,7 @@ function PortfolioTracker({ userId }: PortfolioTrackerProps) {
 
     if (errors.length > 0) {
       setRefreshError(
-        `Some prices could not be updated. ${errors.slice(0, 2).join(" · ")}`
+        `Some prices could not be updated. ${errors.slice(0, 2).join("; ")}`
       );
     }
   }
@@ -292,13 +292,12 @@ function PortfolioTracker({ userId }: PortfolioTrackerProps) {
 
       <div className="portfolio-holdings-header">
         <div>
-          <p className="eyebrow">YOUR PORTFOLIO</p>
+          <p className="eyebrow">Holdings</p>
 
-          <h2>My Investments</h2>
+          <h2>My investments</h2>
 
           <p>
-            Track listed stocks and mutual funds with live prices. Data is saved
-            only to your account.
+            Live prices for stocks and mutual funds, saved only to your account.
           </p>
 
           <p className="portfolio-last-updated">

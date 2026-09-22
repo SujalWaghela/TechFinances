@@ -25,7 +25,7 @@ function Footer() {
               Tech<span>Finance</span>
             </Link>
             <p className="footer-tagline">
-              Smart tools for smarter investing
+              Clear tools for everyday investing decisions
             </p>
           </div>
 
@@ -64,7 +64,8 @@ function Footer() {
               return.
             </p>
             <p className="footer-credits">
-              Stock data via Twelve Data · Mutual fund data via AMFI/mfapi.in
+              Stock data from Twelve Data. Mutual fund data from AMFI via
+              mfapi.in.
             </p>
           </div>
         </div>

@@ -70,14 +70,14 @@ function RiskProfileResultCard({ result }: RiskProfileResultCardProps) {
 
   return (
     <div className="sip-result risk-profiler-result">
-      <p className="result-label">PREDICTED RISK PROFILE</p>
+      <p className="result-label">Your risk profile</p>
 
       <div className={`risk-badge risk-badge-${categoryClass}`}>
         {result.predictedCategory}
       </div>
 
       <h2>{formatPercent(result.confidence)}</h2>
-      <p className="risk-confidence-label">Model confidence</p>
+      <p className="risk-confidence-label">Confidence</p>
 
       <div className="risk-probability-list">
         {bars.map((bar) => (
@@ -105,10 +105,10 @@ function RiskProfileResultCard({ result }: RiskProfileResultCardProps) {
       </div>
 
       <p className="risk-model-note">
-        Softmax logistic regression trained on {RISK_PROFILER_METRICS.totalSamples}{" "}
-        synthetic profiles · test accuracy{" "}
-        {(RISK_PROFILER_METRICS.testAccuracy * 100).toFixed(0)}%. Estimates only —
-        not financial advice.
+        Based on a logistic regression model trained on{" "}
+        {RISK_PROFILER_METRICS.totalSamples} sample profiles (
+        {(RISK_PROFILER_METRICS.testAccuracy * 100).toFixed(0)}% test accuracy).
+        Estimates only, not financial advice.
       </p>
     </div>
   );

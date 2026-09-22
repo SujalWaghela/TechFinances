@@ -108,9 +108,9 @@ function ProfilePage() {
   return (
     <main className="profile-page">
       <div className="page-header">
-        <p className="eyebrow">YOUR ACCOUNT</p>
+        <p className="eyebrow">Account</p>
         <h1>Profile</h1>
-        <p>Manage your personal details and view your private portfolio.</p>
+        <p>Update your details and glance at your private portfolio summary.</p>
       </div>
 
       <div className="profile-layout">

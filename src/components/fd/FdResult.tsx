@@ -20,7 +20,7 @@ function FdResult({
   return (
     <div className="sip-result">
 
-      <p className="result-label">MATURITY AMOUNT</p>
+      <p className="result-label">Maturity amount</p>
 
       <h2>{formatMoney(maturityAmount)}</h2>
 

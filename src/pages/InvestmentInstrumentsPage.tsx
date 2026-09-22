@@ -4,19 +4,18 @@ import { calculateLumpsum } from "../utils/lumpsumCalculator";
 
 function InvestmentInstrumentsPage() {
   const compoundingExample = calculateLumpsum(10_000, 12, 10);
-  const compoundingNote = `Compounding example: ₹10,000 invested as a lumpsum at 12% p.a. grows to about ₹${Math.round(
+  const compoundingNote = `Example: ₹10,000 at 12% a year grows to about ₹${Math.round(
     compoundingExample.futureValue
-  ).toLocaleString("en-IN")} in 10 years (illustrative, using TechFinance’s lumpsum formula).`;
+  ).toLocaleString("en-IN")} in 10 years (illustrative).`;
 
   return (
     <main className="sip-page instruments-page">
       <div className="page-header">
-        <p className="eyebrow">LEARN</p>
+        <p className="eyebrow">Basics</p>
         <h1>Investment Instruments</h1>
         <p>
-          Understand how different instruments generate returns — from fixed
-          deposits to equity and SIPs — so you can choose tools that match your
-          goals and risk comfort.
+          A plain-language guide to how common instruments work, so you can
+          match them to your goals and risk comfort.
         </p>
       </div>
 

@@ -65,8 +65,8 @@ function Navbar() {
                 Log in
               </NavLink>
               <NavLink to="/register" className="nav-cta">
-                Sign up
-              </NavLink>
+                  Create account
+                </NavLink>
             </div>
           )}
         </div>

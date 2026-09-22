@@ -4,13 +4,11 @@ function SipCalculatorPage() {
   return (
     <main className="sip-page">
       <div className="page-header">
-        <p className="eyebrow">INVESTMENT CALCULATOR</p>
-
+        <p className="eyebrow">Monthly investing</p>
         <h1>SIP Calculator</h1>
-
         <p>
-          Calculate the potential growth of your monthly SIP
-          investment.
+          See how a monthly SIP could grow over time, based on the return you
+          expect.
         </p>
       </div>
 

@@ -4,13 +4,11 @@ function InvestmentComparisonPage() {
   return (
     <main className="sip-page comparison-page">
       <div className="page-header">
-        <p className="eyebrow">INVESTMENT PLANNER</p>
-
+        <p className="eyebrow">Side by side</p>
         <h1>Compare Investments</h1>
-
         <p>
-          Compare the potential growth of your money across
-          different investment options.
+          Put the same amount into different options and see which path could
+          grow further under your assumptions.
         </p>
       </div>
 

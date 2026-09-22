@@ -37,10 +37,10 @@ function LoginPage() {
   return (
     <main className="auth-page">
       <div className="auth-card">
-        <p className="eyebrow">WELCOME BACK</p>
+        <p className="eyebrow">Welcome back</p>
         <h1>Log in</h1>
         <p className="auth-subtitle">
-          Access your TechFinance profile and saved preferences.
+          Open your portfolio and saved preferences.
         </p>
 
         <form className="auth-form" onSubmit={handleSubmit}>
@@ -75,7 +75,7 @@ function LoginPage() {
             className="auth-submit"
             disabled={submitting}
           >
-            {submitting ? "Logging in..." : "Log in"}
+            {submitting ? "Logging in…" : "Log in to TechFinance"}
           </button>
         </form>
 

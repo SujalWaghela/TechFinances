@@ -135,13 +135,13 @@ function PortfolioInput({ onAddInvestment }: PortfolioInputProps) {
   return (
     <div className="portfolio-input-card">
       <div className="comparison-section-heading">
-        <p className="eyebrow">ADD INVESTMENT</p>
+        <p className="eyebrow">Add a holding</p>
 
-        <h2>Add to Your Portfolio</h2>
+        <h2>Add to your portfolio</h2>
 
         <p>
-          Search NSE/BSE stocks and Indian mutual funds. Live price / NAV is
-          fetched automatically.
+          Search NSE or BSE stocks and Indian mutual funds. Price or NAV is
+          fetched for you.
         </p>
       </div>
 
@@ -168,7 +168,7 @@ function PortfolioInput({ onAddInvestment }: PortfolioInputProps) {
             </div>
             <small>
               {selected.type === "stock"
-                ? `${selected.symbolOrCode} · ${selected.exchange ?? ""}`
+                ? `${selected.symbolOrCode} on ${selected.exchange ?? "exchange"}`
                 : `Scheme ${selected.symbolOrCode}`}
             </small>
           </div>
@@ -209,7 +209,7 @@ function PortfolioInput({ onAddInvestment }: PortfolioInputProps) {
           className="portfolio-add-button"
           disabled={submitting || priceLoading}
         >
-          {submitting ? "Adding…" : "+ Add Investment"}
+          {submitting ? "Adding…" : "Add to portfolio"}
         </button>
       </form>
     </div>

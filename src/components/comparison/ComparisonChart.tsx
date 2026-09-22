@@ -30,7 +30,7 @@ function ComparisonChart({
   return (
     <div className="comparison-chart">
       <div className="comparison-section-heading">
-        <p className="eyebrow">VISUAL COMPARISON</p>
+        <p className="eyebrow">Chart</p>
 
         <h2>Estimated Gain</h2>
 

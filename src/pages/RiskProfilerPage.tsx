@@ -29,12 +29,11 @@ function RiskProfilerPage() {
   return (
     <main className="sip-page">
       <div className="page-header">
-        <p className="eyebrow">ML RISK ENGINE</p>
+        <p className="eyebrow">Before you invest</p>
         <h1>Risk Profiler</h1>
         <p>
-          Answer a few questions about your finances. A trained logistic
-          regression model estimates whether your investment style leans
-          Conservative, Moderate, or Aggressive.
+          Answer a few questions about your finances. We estimate whether your
+          style leans Conservative, Moderate, or Aggressive.
         </p>
       </div>
 

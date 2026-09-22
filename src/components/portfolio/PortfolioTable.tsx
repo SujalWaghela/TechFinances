@@ -24,11 +24,11 @@ function PortfolioTable({
           +
         </div>
 
-        <h3>No investments added yet</h3>
+        <h3>Start with your first holding</h3>
 
         <p>
-          Add your first investment above to start
-          tracking your portfolio.
+          Search for a stock or mutual fund above to begin tracking what you
+          own.
         </p>
       </div>
     );

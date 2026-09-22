@@ -11,14 +11,11 @@ function PortfolioTrackerPage() {
   return (
     <main className="sip-page comparison-page">
       <div className="page-header">
-        <p className="eyebrow">PORTFOLIO MANAGEMENT</p>
-
+        <p className="eyebrow">Your holdings</p>
         <h1>Portfolio Tracker</h1>
-
         <p>
-          Track your investments, monitor performance and evaluate your
-          portfolio in one place. Data is saved only to {user.name}&apos;s
-          account.
+          Add stocks and mutual funds, refresh live prices, and see where you
+          stand. Saved only for {user.name}.
         </p>
       </div>
 

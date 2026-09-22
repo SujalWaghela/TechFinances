@@ -37,7 +37,7 @@ function PerformanceSummaryCard({ metrics }: PerformanceSummaryCardProps) {
   return (
     <section className="performance-summary-card">
       <div className="analytics-section-heading">
-        <p className="eyebrow">PERFORMANCE EVALUATION</p>
+        <p className="eyebrow">Returns</p>
         <h2>Portfolio Metrics</h2>
         <p>
           CAGR, absolute return and XIRR estimated from your holdings. Benchmark

@@ -45,14 +45,13 @@ function AnalyticsInsights({
     <div className="analytics-insights">
       <div className="analytics-section-heading">
         <p className="eyebrow">
-          ANALYTICAL INSIGHTS
+          Observations
         </p>
 
-        <h2>Portfolio Insights</h2>
+        <h2>What stands out</h2>
 
         <p>
-          Automatically generated observations
-          based on your portfolio data.
+          Quick reads from your current holdings.
         </p>
       </div>
 

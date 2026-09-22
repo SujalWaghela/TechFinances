@@ -1,5 +1,5 @@
 /* ================================
-   Global
+   Global — TechFinance design system
 ================================ */
 
 * {
@@ -7,30 +7,56 @@
 }
 
 :root {
-  --bg: #eef1ef;
-  --bg-accent: #e4ebe7;
-  --card: #ffffff;
-  --ink: #12201b;
-  --ink-soft: #2f3d37;
-  --muted: #5f6d66;
-  --muted-soft: #8a968f;
-  --border: #d7dfd9;
-  --border-strong: #c2cdc6;
-  --surface-2: #f4f7f5;
-  --surface-tint: #eef6f2;
-  --accent: #0f6e56;
-  --accent-strong: #0b5a46;
-  --accent-bright: #148f6e;
-  --accent-soft: #e8f3ef;
-  --accent-mute: #d5ebe3;
-  --accent-on-dark: #8fd4bc;
-  --danger: #b42318;
-  --success: #067647;
-  --shadow: 0 1px 2px rgba(18, 32, 27, 0.04), 0 8px 24px rgba(18, 32, 27, 0.05);
-  --radius: 14px;
-  --radius-sm: 10px;
-  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  /* Surfaces */
+  --bg: #f3f1ec;
+  --bg-accent: #e7ebe6;
+  --card: rgba(255, 254, 250, 0.72);
+  --card-solid: #fffefa;
+  --ink: #1c2420;
+  --ink-soft: #2a3530;
+  --muted: #5c6b63;
+  --muted-soft: #849188;
+  --border: rgba(28, 36, 32, 0.1);
+  --border-strong: rgba(28, 36, 32, 0.16);
+  --border-glass: rgba(255, 255, 255, 0.55);
+  --surface-2: rgba(232, 239, 234, 0.85);
+  --surface-tint: rgba(232, 239, 234, 0.55);
+
+  /* Brand (deep forest) */
+  --accent: #1b4332;
+  --accent-strong: #143528;
+  --accent-bright: #2d5f3c;
+  --accent-soft: #e8efea;
+  --accent-mute: #d4e0d8;
+  --accent-on-dark: #dce8e1;
+  --gold: #b8860b;
+
+  /* Semantic money colors */
+  --gain: #1f6b45;
+  --loss: #a63d2f;
+  --danger: #a63d2f;
+  --success: #1f6b45;
+
+  /* Risk badges (distinct from gain/loss) */
+  --risk-low-bg: #dce8e1;
+  --risk-low-ink: #3d5a4c;
+  --risk-mid-bg: #f3ebd2;
+  --risk-mid-ink: #8a6a1f;
+  --risk-high-bg: #f2e0db;
+  --risk-high-ink: #8b3a2f;
+
+  /* Glass + elevation */
+  --glass-bg: rgba(255, 254, 250, 0.55);
+  --glass-bg-strong: rgba(255, 254, 250, 0.78);
+  --glass-blur: blur(22px) saturate(180%);
+  --glass-dark: rgba(27, 67, 50, 0.78);
+  --shadow: 0 1px 1px rgba(28, 36, 32, 0.03), 0 10px 28px rgba(28, 36, 32, 0.05);
+  --shadow-soft: 0 1px 0 rgba(255, 255, 255, 0.6) inset;
+  --radius: 18px;
+  --radius-sm: 12px;
+
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Source Serif 4", Georgia, "Times New Roman", serif;
 
   font-family: var(--font-sans);
   color: var(--ink);
@@ -46,10 +72,12 @@ html {
 body {
   margin: 0;
   min-width: 320px;
-  background:
-    radial-gradient(1200px 500px at 10% -10%, rgba(15, 110, 86, 0.08), transparent 55%),
-    radial-gradient(900px 420px at 100% 0%, rgba(18, 32, 27, 0.05), transparent 50%),
-    linear-gradient(180deg, #f5f7f5 0%, var(--bg) 42%, #e9eeeb 100%);
+  /* Soft atmosphere so frosted glass has something to blur */
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(900px 520px at 8% -8%, rgba(45, 95, 60, 0.14), transparent 58%),
+    radial-gradient(760px 460px at 96% 4%, rgba(184, 134, 11, 0.08), transparent 52%),
+    radial-gradient(640px 380px at 70% 90%, rgba(27, 67, 50, 0.07), transparent 55%);
   background-attachment: fixed;
 }
 
@@ -60,6 +88,59 @@ textarea {
   font: inherit;
 }
 
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible),
+input:focus:not(:focus-visible),
+select:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.tabular-nums,
+.sip-input-header strong,
+.sip-result h2,
+.result-row strong,
+.portfolio-summary-card strong,
+.comparison-table strong,
+.auth-field input {
+  font-variant-numeric: tabular-nums;
+}
+
+
+/* ================================
+   Apple-style frosted glass
+================================ */
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--shadow-soft), var(--shadow);
+}
+
+.glass-strong {
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--shadow-soft), var(--shadow);
+}
+
+.glass-dark {
+  background: var(--glass-dark);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: var(--shadow);
+  color: var(--card-solid);
+}
+
 
 /* ================================
    Page
@@ -67,13 +148,21 @@ textarea {
 
 #root {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#root > main,
+#root .sip-page,
+#root .auth-page {
+  flex: 1;
 }
 
 .sip-page {
   width: 100%;
   max-width: 1120px;
   margin: 0 auto;
-  padding: 56px 24px 72px;
+  padding: 48px 24px 64px;
 }
 
 
@@ -83,39 +172,39 @@ textarea {
 
 .page-header {
   text-align: left;
-  margin-bottom: 36px;
-  max-width: 720px;
+  margin-bottom: 32px;
+  max-width: 640px;
 }
 
 .eyebrow {
   display: inline-block;
-  margin: 0 0 14px;
+  margin: 0 0 10px;
   padding: 0;
   border-radius: 0;
   background: transparent;
-  color: var(--accent);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  color: var(--accent-bright);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-transform: none;
 }
 
 .page-header h1 {
   margin: 0;
   color: var(--ink);
   font-family: var(--font-display);
-  font-size: clamp(36px, 5vw, 52px);
-  line-height: 1.08;
+  font-size: clamp(32px, 4.5vw, 44px);
+  line-height: 1.12;
   font-weight: 600;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
 }
 
 .page-header p:last-child {
-  max-width: 560px;
-  margin: 14px 0 0;
+  max-width: 540px;
+  margin: 12px 0 0;
   color: var(--muted);
   font-size: 16px;
-  line-height: 1.65;
+  line-height: 1.6;
 }
 
 
@@ -125,7 +214,7 @@ textarea {
 
 .sip-calculator {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   gap: 20px;
   align-items: stretch;
 }
@@ -136,11 +225,13 @@ textarea {
 ================================ */
 
 .sip-inputs {
-  padding: 30px;
-  background: var(--card);
-  border: 1px solid var(--border);
+  padding: 28px;
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-glass);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-soft), var(--shadow);
 }
 
 
@@ -174,19 +265,15 @@ textarea {
 
 .sip-input-header strong {
   min-width: 80px;
-
   padding: 8px 12px;
-
   text-align: center;
-
-  background: var(--surface-2);
-
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid var(--border);
   border-radius: 9px;
-
   color: var(--ink);
-
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
 
@@ -261,13 +348,14 @@ textarea {
 .sip-result {
   position: relative;
   overflow: hidden;
-  padding: 30px;
-  background:
-    linear-gradient(160deg, #16352c 0%, #0f1f1a 55%, #0c1713 100%);
-  color: var(--card);
-  border: 1px solid #1f3d33;
+  padding: 32px 28px;
+  background: var(--glass-dark);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  color: var(--card-solid);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-soft), 0 16px 40px rgba(27, 67, 50, 0.22);
 }
 
 .sip-result::before,
@@ -287,22 +375,22 @@ textarea {
 
 .result-label {
   margin: 0;
-
-  color: var(--muted-soft);
-
-  font-size: 12px;
-  font-weight: 700;
-
-  letter-spacing: 0.12em;
+  color: rgba(255, 254, 250, 0.62);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-transform: none;
 }
 
 .sip-result h2 {
-  margin: 10px 0 28px;
+  margin: 8px 0 28px;
   font-family: var(--font-display);
-  font-size: clamp(34px, 4.5vw, 44px);
+  font-size: clamp(36px, 5vw, 52px);
   line-height: 1.05;
   letter-spacing: -0.03em;
   font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #fffefa;
 }
 
 
@@ -312,43 +400,36 @@ textarea {
 
 .result-row {
   display: flex;
-
   justify-content: space-between;
   align-items: center;
-
-  padding: 18px 0;
-
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 16px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .result-row span {
-  color: var(--muted-soft);
-
+  color: rgba(255, 254, 250, 0.62);
   font-size: 14px;
 }
 
 .result-row strong {
-  color: var(--card);
-
+  color: #fffefa;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
 .result-row.total {
-  margin-top: 5px;
-
-  padding-top: 20px;
-
+  margin-top: 4px;
+  padding-top: 18px;
   font-size: 17px;
 }
 
 .result-row.total span {
-  color: var(--border-strong);
+  color: rgba(255, 254, 250, 0.72);
 }
 
 .result-row.total strong {
-  color: var(--accent-on-dark);
-
+  color: #e8c547;
   font-size: 18px;
 }
 
@@ -359,10 +440,12 @@ textarea {
 
 .reality-check {
   grid-column: 1 / -1;
-  background: var(--card);
-  border: 1px solid var(--border);
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-glass);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-soft), var(--shadow);
   overflow: hidden;
 }
 
@@ -381,7 +464,7 @@ textarea {
 }
 
 .reality-check-toggle:hover {
-  background: #f8fafc;
+  background: rgba(255, 255, 255, 0.35);
 }
 
 .reality-check-toggle-left {
@@ -529,7 +612,7 @@ textarea {
 
 .reality-check-field:focus-within .reality-check-field-control {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(15, 110, 86, 0.14);
+  box-shadow: 0 0 0 3px rgba(27, 67, 50, 0.14);
 }
 
 .reality-check-field-control input {
@@ -596,7 +679,7 @@ textarea {
 }
 
 .reality-row.is-deduction strong {
-  color: #dc2626;
+  color: var(--loss);
 }
 
 .reality-row.is-subtotal {
@@ -616,7 +699,9 @@ textarea {
 .reality-summary {
   margin-top: 14px;
   padding: 16px;
-  background: linear-gradient(180deg, #f7fbf9 0%, var(--accent-soft) 100%);
+  background: rgba(232, 239, 234, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--accent-mute);
   border-radius: var(--radius);
 }
@@ -631,11 +716,11 @@ textarea {
 }
 
 .reality-summary-hero span {
-  color: var(--accent);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  color: var(--accent-bright);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-transform: none;
 }
 
 .reality-summary-hero strong {
@@ -682,11 +767,11 @@ textarea {
 }
 
 .reality-metric.is-positive strong {
-  color: #15803d;
+  color: var(--gain);
 }
 
 .reality-metric.is-negative strong {
-  color: #dc2626;
+  color: var(--loss);
 }
 
 .reality-check-note {
@@ -786,11 +871,11 @@ textarea {
   top: 0;
   z-index: 1000;
   width: 100%;
-  background: rgba(255, 255, 255, 0.86);
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: inset 0 2px 0 var(--accent);
+  background: rgba(255, 254, 250, 0.62);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  box-shadow: 0 1px 0 rgba(28, 36, 32, 0.06);
 }
 
 .navbar-container {
@@ -908,9 +993,11 @@ textarea {
 
 .footer {
   width: 100%;
-  margin-top: 48px;
-  background: #e4ebe7;
-  border-top: 1px solid var(--border);
+  margin-top: auto;
+  background: rgba(232, 239, 234, 0.55);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-top: 1px solid rgba(255, 255, 255, 0.45);
 }
 
 .footer-container {
@@ -1039,10 +1126,12 @@ textarea {
 .comparison-inputs {
   padding: 34px;
   margin-bottom: 24px;
-  background: var(--card);
-  border: 1px solid var(--border);
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-glass);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-soft), var(--shadow);
 }
 
 .comparison-mode {
@@ -1398,10 +1487,12 @@ textarea {
 .portfolio-input-card {
   padding: 34px;
   margin-bottom: 24px;
-  background: var(--card);
-  border: 1px solid var(--border);
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-glass);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-soft), var(--shadow);
 }
 
 .portfolio-form {
@@ -1685,18 +1776,15 @@ textarea {
   border: none;
   border-radius: 10px;
   background: var(--accent);
-  color: var(--card);
+  color: #fffefa;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease;
+  transition: background 0.2s ease;
 }
 
 .portfolio-add-button:hover {
   background: var(--accent-strong);
-  transform: translateY(-1px);
 }
 
 /* ================================
@@ -1713,11 +1801,12 @@ textarea {
 
 .portfolio-summary-card {
   padding: 22px;
-  background: var(--card);
-  border: 1px solid var(--border);
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-glass);
   border-radius: var(--radius);
-  box-shadow:
-    0 4px 6px rgba(17, 24, 39, 0.02);
+  box-shadow: var(--shadow-soft), var(--shadow);
 }
 
 .portfolio-summary-card span {
@@ -1732,14 +1821,15 @@ textarea {
   color: var(--ink);
   font-size: 22px;
   letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
 }
 
 .portfolio-summary-card.profit strong {
-  color: #059669;
+  color: var(--gain);
 }
 
 .portfolio-summary-card.loss strong {
-  color: #dc2626;
+  color: var(--loss);
 }
 
 /* ================================
@@ -2516,10 +2606,10 @@ textarea {
   padding: 8px 14px;
   border-radius: 8px;
   background: var(--accent);
-  color: var(--card) !important;
+  color: #fffefa !important;
   text-decoration: none;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
   transition: background 0.15s ease;
 }
 
@@ -2583,10 +2673,12 @@ textarea {
 
 .auth-card {
   padding: 34px;
-  background: var(--card);
-  border: 1px solid var(--border);
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-glass);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-soft), var(--shadow);
 }
 
 .auth-card h1 {
@@ -2631,7 +2723,7 @@ textarea {
   padding: 12px 14px;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: var(--card);
+  background: rgba(255, 254, 250, 0.9);
   color: var(--ink);
   outline: none;
   transition:
@@ -2648,7 +2740,7 @@ textarea {
 .auth-field select:focus,
 .auth-field textarea:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(15, 110, 86, 0.14);
+  box-shadow: 0 0 0 3px rgba(27, 67, 50, 0.14);
 }
 
 .auth-field input:disabled {
@@ -2663,9 +2755,9 @@ textarea {
   border: none;
   border-radius: var(--radius-sm);
   background: var(--accent);
-  color: var(--card);
+  color: #fffefa;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
   transition: background 0.15s ease;
 }
@@ -3072,23 +3164,23 @@ textarea {
   padding: 8px 14px;
   border-radius: 8px;
   font-size: 14px;
-  font-weight: 750;
-  letter-spacing: 0.02em;
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
 .risk-badge-conservative {
-  background: rgba(6, 118, 71, 0.18);
-  color: #8fd4bc;
+  background: var(--risk-low-bg);
+  color: var(--risk-low-ink);
 }
 
 .risk-badge-moderate {
-  background: rgba(202, 138, 4, 0.2);
-  color: #f6d889;
+  background: var(--risk-mid-bg);
+  color: var(--risk-mid-ink);
 }
 
 .risk-badge-aggressive {
-  background: rgba(180, 35, 24, 0.2);
-  color: #f5a39a;
+  background: var(--risk-high-bg);
+  color: var(--risk-high-ink);
 }
 
 .risk-confidence-label {
@@ -3134,19 +3226,19 @@ textarea {
 .risk-probability-fill {
   height: 100%;
   border-radius: 999px;
-  transition: width 0.25s ease;
+  transition: width 0.45s ease;
 }
 
 .risk-fill-conservative {
-  background: #34a853;
+  background: var(--risk-low-ink);
 }
 
 .risk-fill-moderate {
-  background: #e8b339;
+  background: var(--risk-mid-ink);
 }
 
 .risk-fill-aggressive {
-  background: #e25b4c;
+  background: var(--risk-high-ink);
 }
 
 .risk-recommendation {
@@ -3160,10 +3252,10 @@ textarea {
   display: block;
   margin-bottom: 6px;
   color: var(--accent-on-dark);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-transform: none;
 }
 
 .risk-recommendation p {
@@ -3501,5 +3593,73 @@ textarea {
 
   .performance-benchmark-row {
     grid-template-columns: 1fr;
+  }
+}
+
+
+/* ================================
+   Design system — gain/loss + glass cards
+================================ */
+
+.portfolio-profit,
+.analytics-profit strong,
+.analytics-profit-text,
+.comparison-table-row .gain,
+.profile-portfolio-stats strong.is-positive,
+.performance-metric .is-positive,
+.performance-benchmark-row .is-positive {
+  color: var(--gain) !important;
+}
+
+.portfolio-loss,
+.analytics-loss strong,
+.analytics-loss-text,
+.profile-portfolio-stats strong.is-negative,
+.performance-metric .is-negative,
+.performance-benchmark-row .is-negative {
+  color: var(--loss) !important;
+}
+
+.profit-bar,
+.performance-benchmark-fill.is-positive {
+  background: var(--gain) !important;
+}
+
+.loss-bar,
+.performance-benchmark-fill.is-negative {
+  background: var(--loss) !important;
+}
+
+.portfolio-form,
+.portfolio-table-wrapper,
+.analytics-summary,
+.analytics-card,
+.instrument-card,
+.performance-summary-card,
+.portfolio-chart,
+.comparison-table-wrapper {
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--shadow-soft), var(--shadow);
+}
+
+.sip-input input[type="range"]::-webkit-slider-thumb {
+  box-shadow: 0 1px 4px rgba(27, 67, 50, 0.28);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .risk-probability-fill {
+    transition: none !important;
   }
 }

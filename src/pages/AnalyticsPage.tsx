@@ -11,13 +11,11 @@ function AnalyticsPage() {
   return (
     <main className="sip-page comparison-page">
       <div className="page-header">
-        <p className="eyebrow">ANALYTICAL REPORTS</p>
-
-        <h1>Investment Analytics</h1>
-
+        <p className="eyebrow">Performance</p>
+        <h1>Analytics</h1>
         <p>
-          Analyze investment growth, performance, allocation and portfolio
-          trends for your account.
+          Allocation, returns, and trends based on the same portfolio you track
+          above.
         </p>
       </div>
 

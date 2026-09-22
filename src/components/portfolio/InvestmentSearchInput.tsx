@@ -71,7 +71,7 @@ function InvestmentSearchInput({
               type: "stock" as const,
               symbolOrCode: item.symbol,
               exchange: item.exchange,
-              subtitle: `${item.symbol} · ${item.exchange}`,
+              subtitle: `${item.symbol} on ${item.exchange}`,
             }))
           : [];
 

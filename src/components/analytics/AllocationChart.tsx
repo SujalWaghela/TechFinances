@@ -23,14 +23,13 @@ function AllocationChart({
     <div className="analytics-chart-card">
       <div className="analytics-section-heading">
         <p className="eyebrow">
-          ALLOCATION
+          Mix
         </p>
 
-        <h2>Portfolio Allocation</h2>
+        <h2>Portfolio allocation</h2>
 
         <p>
-          See how your current portfolio is
-          distributed across investment types.
+          How your money is split across investment types.
         </p>
       </div>
 

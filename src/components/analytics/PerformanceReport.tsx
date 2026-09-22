@@ -31,14 +31,13 @@ function PerformanceReport({
     <div className="analytics-report-card">
       <div className="analytics-section-heading">
         <p className="eyebrow">
-          PERFORMANCE REPORT
+          By holding
         </p>
 
-        <h2>Investment Performance</h2>
+        <h2>Investment performance</h2>
 
         <p>
-          Detailed performance of each
-          investment in your portfolio.
+          Gain or loss for each line in your portfolio.
         </p>
       </div>
 

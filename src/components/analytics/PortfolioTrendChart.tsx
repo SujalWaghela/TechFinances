@@ -17,7 +17,7 @@ function PortfolioTrendChart({ history }: PortfolioTrendChartProps) {
     return (
       <div className="analytics-chart-card">
         <div className="analytics-section-heading">
-          <p className="eyebrow">GROWTH TREND</p>
+          <p className="eyebrow">Growth over time</p>
           <h2>Portfolio Value Over Time</h2>
           <p>
             Visit Portfolio Tracker a few times after updating holdings to build
@@ -59,7 +59,7 @@ function PortfolioTrendChart({ history }: PortfolioTrendChartProps) {
   return (
     <div className="analytics-chart-card">
       <div className="analytics-section-heading">
-        <p className="eyebrow">GROWTH TREND</p>
+        <p className="eyebrow">Growth over time</p>
         <h2>Portfolio Value Over Time</h2>
         <p>
           Snapshots saved when you use Portfolio Tracker (last {history.length}{" "}

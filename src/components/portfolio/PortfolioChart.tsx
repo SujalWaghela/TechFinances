@@ -52,14 +52,13 @@ function PortfolioChart({
     <div className="portfolio-chart">
       <div className="comparison-section-heading">
         <p className="eyebrow">
-          PERFORMANCE
+          Gain and loss
         </p>
 
-        <h2>Investment Performance</h2>
+        <h2>Investment performance</h2>
 
         <p>
-          Compare the gain or loss of each
-          investment in your portfolio.
+          Compare how each holding is doing right now.
         </p>
       </div>
 

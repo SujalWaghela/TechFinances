@@ -75,11 +75,11 @@ function AnalyticsDashboard({ userId }: AnalyticsDashboardProps) {
       <div className="analytics-empty-page">
         <div className="analytics-empty-icon">TF</div>
 
-        <h2>No Portfolio Data Yet</h2>
+        <h2>Nothing to analyse yet</h2>
 
         <p>
-          Add investments to your Portfolio Tracker first. Your account&apos;s
-          investment data will appear here automatically.
+          Add holdings in Portfolio Tracker first. Your numbers will show up
+          here automatically.
         </p>
       </div>
     );

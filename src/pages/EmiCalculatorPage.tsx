@@ -3,20 +3,16 @@ import EmiCalculator from "../components/emi/EmiCalculator";
 function EmiCalculatorPage() {
   return (
     <main className="sip-page">
-
       <div className="page-header">
-        <p className="eyebrow">LOAN CALCULATOR</p>
-
+        <p className="eyebrow">Loans</p>
         <h1>EMI Calculator</h1>
-
         <p>
-          Calculate your monthly loan EMI, total interest,
-          and total repayment.
+          Work out your monthly EMI, total interest, and overall repayment for a
+          loan.
         </p>
       </div>
 
       <EmiCalculator />
-
     </main>
   );
 }

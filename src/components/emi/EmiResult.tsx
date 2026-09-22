@@ -20,7 +20,7 @@ function EmiResult({
   return (
     <div className="sip-result">
 
-      <p className="result-label">MONTHLY EMI</p>
+      <p className="result-label">Monthly EMI</p>
 
       <h2>{formatMoney(monthlyEMI)}</h2>
 

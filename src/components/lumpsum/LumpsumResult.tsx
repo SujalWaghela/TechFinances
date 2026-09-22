@@ -19,7 +19,7 @@ function LumpsumResult({
 }: LumpsumResultProps) {
   return (
     <div className="sip-result">
-      <p className="result-label">ESTIMATED VALUE</p>
+      <p className="result-label">Estimated value</p>
 
       <h2>{formatMoney(futureValue)}</h2>
 
