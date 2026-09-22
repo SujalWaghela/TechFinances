@@ -1,9 +1,8 @@
-import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import CalculatorsDropdown from "./CalculatorsDropdown";
 
 function Navbar() {
-  const [calculatorOpen, setCalculatorOpen] = useState(false);
   const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -28,62 +27,11 @@ function Navbar() {
             Analytics
           </NavLink>
 
-          <NavLink to="/compare-investments" className="nav-link">
-            Compare
-          </NavLink>
-
           <NavLink to="/risk-profiler" className="nav-link">
             Risk Profiler
           </NavLink>
 
-          <div className="navbar-dropdown">
-            <button
-              type="button"
-              className={`nav-link calculator-button ${
-                calculatorOpen ? "active" : ""
-              }`}
-              onClick={() => setCalculatorOpen(!calculatorOpen)}
-            >
-              Calculator
-              <span className="dropdown-arrow">▾</span>
-            </button>
-
-            {calculatorOpen && (
-              <div className="calculator-menu">
-                <NavLink
-                  to="/sip-calculator"
-                  className="calculator-menu-link"
-                  onClick={() => setCalculatorOpen(false)}
-                >
-                  SIP Calculator
-                </NavLink>
-
-                <NavLink
-                  to="/lumpsum-calculator"
-                  className="calculator-menu-link"
-                  onClick={() => setCalculatorOpen(false)}
-                >
-                  Lumpsum
-                </NavLink>
-
-                <NavLink
-                  to="/emi-calculator"
-                  className="calculator-menu-link"
-                  onClick={() => setCalculatorOpen(false)}
-                >
-                  EMI Calculator
-                </NavLink>
-
-                <NavLink
-                  to="/fd-calculator"
-                  className="calculator-menu-link"
-                  onClick={() => setCalculatorOpen(false)}
-                >
-                  FD Calculator
-                </NavLink>
-              </div>
-            )}
-          </div>
+          <CalculatorsDropdown />
 
           {isAuthenticated && user ? (
             <div className="navbar-auth">
