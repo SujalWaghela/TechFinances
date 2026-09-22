@@ -1,3 +1,5 @@
+import type { LiveAssetKind } from "../types/marketData";
+
 export type PortfolioType =
   | "Stock"
   | "Mutual Fund"
@@ -7,6 +9,8 @@ export type PortfolioType =
   | "Gold"
   | "Other";
 
+export type { LiveAssetKind };
+
 export interface PortfolioInvestment {
   id: string;
   name: string;
@@ -14,6 +18,12 @@ export interface PortfolioInvestment {
   quantity: number;
   buyPrice: number;
   currentPrice: number;
+  /** Twelve Data symbol or mfapi scheme code — used for live refresh */
+  symbolOrCode?: string;
+  /** NSE / BSE for stocks */
+  exchange?: string;
+  liveAssetKind?: LiveAssetKind;
+  lastPriceUpdated?: string;
 }
 
 export interface PortfolioInvestmentResult
