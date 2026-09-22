@@ -56,7 +56,7 @@ function AnalyticsDashboard({ userId }: AnalyticsDashboardProps) {
   if (investments.length === 0) {
     return (
       <div className="analytics-empty-page">
-        <div className="analytics-empty-icon">📊</div>
+        <div className="analytics-empty-icon">TF</div>
 
         <h2>No Portfolio Data Yet</h2>
 
