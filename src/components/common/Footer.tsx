@@ -74,7 +74,7 @@ function Footer() {
           <p className="footer-copyright">
             © 2026 TechFinance. All rights reserved.
           </p>
-          <p className="footer-meta">An MSc Project</p>
+          <p className="footer-meta">Project By Sujal Waghela</p>
         </div>
       </div>
     </footer>
