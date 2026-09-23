@@ -2,6 +2,8 @@ import { useState } from "react";
 import LumpsumInput from "./LumpsumInput";
 import LumpsumResult from "./LumpsumResult";
 import RealityCheck from "../common/RealityCheck";
+import FaqAccordion from "../common/FaqAccordion";
+import { lumpsumFaqs } from "../../data/faqContent";
 import { calculateLumpsum } from "../../utils/lumpsumCalculator";
 
 function LumpsumCalculator() {
@@ -18,7 +20,6 @@ function LumpsumCalculator() {
   return (
     <div className="sip-calculator">
       <div className="sip-inputs">
-
         <LumpsumInput
           label="Investment Amount"
           value={investment}
@@ -47,7 +48,6 @@ function LumpsumCalculator() {
           max={40}
           suffix=" Years"
         />
-
       </div>
 
       <LumpsumResult
@@ -65,6 +65,8 @@ function LumpsumCalculator() {
         defaultFeeRate={1}
         defaultInflationRate={6}
       />
+
+      <FaqAccordion title="Lumpsum Calculator FAQs" items={lumpsumFaqs} />
     </div>
   );
 }

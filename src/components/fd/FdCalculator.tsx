@@ -2,6 +2,8 @@ import { useState } from "react";
 import FdInput from "./FdInput";
 import FdResult from "./FdResult";
 import RealityCheck from "../common/RealityCheck";
+import FaqAccordion from "../common/FaqAccordion";
+import { fdFaqs } from "../../data/faqContent";
 import { calculateFD } from "../../utils/fdCalculator";
 
 function FdCalculator() {
@@ -17,9 +19,7 @@ function FdCalculator() {
 
   return (
     <div className="sip-calculator">
-
       <div className="sip-inputs">
-
         <FdInput
           label="Deposit Amount"
           value={deposit}
@@ -48,7 +48,6 @@ function FdCalculator() {
           max={20}
           suffix=" Years"
         />
-
       </div>
 
       <FdResult
@@ -67,6 +66,7 @@ function FdCalculator() {
         defaultInflationRate={6}
       />
 
+      <FaqAccordion title="FD Calculator FAQs" items={fdFaqs} />
     </div>
   );
 }

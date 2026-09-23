@@ -1,6 +1,8 @@
 import { useState } from "react";
 import EmiInput from "./EmiInput";
 import EmiResult from "./EmiResult";
+import FaqAccordion from "../common/FaqAccordion";
+import { emiFaqs } from "../../data/faqContent";
 import { calculateEMI } from "../../utils/emiCalculator";
 
 function EmiCalculator() {
@@ -16,9 +18,7 @@ function EmiCalculator() {
 
   return (
     <div className="sip-calculator">
-
       <div className="sip-inputs">
-
         <EmiInput
           label="Loan Amount"
           value={loanAmount}
@@ -47,7 +47,6 @@ function EmiCalculator() {
           max={30}
           suffix=" Years"
         />
-
       </div>
 
       <EmiResult
@@ -56,6 +55,7 @@ function EmiCalculator() {
         totalPayment={result.totalPayment}
       />
 
+      <FaqAccordion title="EMI Calculator FAQs" items={emiFaqs} />
     </div>
   );
 }

@@ -2,6 +2,8 @@ import { useState } from "react";
 import SipInput from "./SipInput";
 import SipResult from "./SipResult";
 import RealityCheck from "../common/RealityCheck";
+import FaqAccordion from "../common/FaqAccordion";
+import { sipFaqs } from "../../data/faqContent";
 import { calculateSIP } from "../../utils/sipCalculator";
 
 function SipCalculator() {
@@ -63,6 +65,8 @@ function SipCalculator() {
         defaultFeeRate={1}
         defaultInflationRate={6}
       />
+
+      <FaqAccordion title="SIP Calculator FAQs" items={sipFaqs} />
     </div>
   );
 }
